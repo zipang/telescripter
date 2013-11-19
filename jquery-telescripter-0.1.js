@@ -44,21 +44,20 @@
 
 				if (this.rendering) this.stop().cls();
 
-				var source = this.options.source;
-
 				var i = 0, machine = this,
-					len = source.length,
-					printParaphs = function() {
+					pages = machine.options.source,
+					len = pages.length,
+					printPages = function() {
 
 						if (machine.rendering) {
-							machine.displayPage(source[i % len], printParaphs);
+							machine.printPage(pages[i % len], printPages);
 							i++;
 						}
 					};
 
-				this.rendering = true;
-				printParaphs();
-				return this;
+				machine.rendering = true;
+				printPages();
+				return machine;
 			},
 
 			cls : function() {
@@ -81,53 +80,57 @@
 				return this;
 			},
 
-			displayPage : function(message, callback) {
+			printPage : function(message, eop) {
 				this.cls();
 
 				var i = 0, machine = this,
-					lines = this.lines = message.split("\n"),
+					lines = message.split("\n"),
 					lineDelay = machine.options.lineDelay,
 					len = lines.length,
 					printLines = function() {
 
-						if (machine.rendering && i < len) {
-							requestAnimationFrame(function() {
-								if (i > 0) machine.newline();
-								machine.rendering = setTimeout(function() {
-									machine.printLine(lines[i++], printLines);
-								}, lineDelay);
-							});
+						if (machine.rendering) {
+							if (i < len) {
+								requestAnimationFrame(function() {
+									if (i > 0) machine.newline();
+									machine.rendering = setTimeout(function() {
+										machine.printLine(lines[i++], printLines);
+									}, lineDelay);
+								});
 
-						} else {
-							// Wait for the page transition delay before calling callback
-							machine.rendering = setTimeout(callback, machine.options.pageDelay);
+							} else {
+								// Wait for the page transition delay
+								// before calling callback
+								machine.rendering = setTimeout(eop, machine.options.pageDelay);
+							}
 						}
 					};
 
-				this.rendering = true;
 				printLines();
-				return this;
+				return machine;
 			},
 
-			printLine : function(newLine, callback) {
+			printLine : function(line, eol) {
 
-				var chars = newLine.split(""),
+				var chars = line.split(""),
 					machine = this,
 					i = 0, len = chars.length,
 					delay = machine.options.charDelay,
 					printChars = function() {
+						var prog = machine.rendering;
 						requestAnimationFrame(function() {
 
-							if (machine.rendering && i < len) {
+							if (machine.rendering != prog) return;
+
+							if (i < len) {
 								machine.refreshScreen(machine.text + chars[i++]);
 								machine.rendering = setTimeout(printChars, delay);
 							} else {
-								callback();
+								eol(); // end-of-line callback
 							}
 						});
 					};
 
-				this.rendering = true;
 				printChars();
 			},
 			stop: function() {
