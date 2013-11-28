@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+
+	<style>
+		html {
+			font-family: Georgia, Serif;
+			font-size: 20px;
+		}
+		body {
+			position: relative;
+			background-color: #333;
+			background-image: url(http://learn.jquery.com/jquery-wp-content/themes/jquery/images/bg-body-learn.jpg)
+		}
+		h1, h2 {
+			color: white;
+			text-align: center;
+		}
+		#telescripter {
+			display: block;
+			width: 50em;
+			margin: 1em auto;
+
+			box-shadow: 0 5 8 #333;
+			width: 40%;
+			min-height: 8em;
+			margin: auto;
+			padding: 0 1em;
+			border: 10px solid rgba(255,255,0,0.1);
+			border-radius: 20px;
+			background-color: rgba(0,64,0,0.5);
+			color: #999;
+		}
+		#telescripter.newline {
+			border-color: rgba(255,255,0,0.3);
+		}
+		#txt-source {
+			padding: 1em;
+			display: block;
+			width: 50em;
+			height: 20em;
+			margin: 5em auto 1em;
+			opacity: 0.6;
+		}
+		button {
+			display: block;
+			margin: 0 auto;
+			padding: 1em;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>TELESCRIPTER DEMO</h1>
+	<h2>6 Words Stories</h2>
+	<hr/>
+
+	<div id="telescripter"></div>
+
+	<p>Type your 6 word stories and press go!</p>
+	<p>Each paragraph will display in its own page.</p>
+	<textarea name="" id="txt-source" cols="90" rows="10">
+For sale:
+Baby shoes,
+Never worn.
+[* , red]Ernest Hemingway
+
+Ships fire;
+Princess weeps,
+between stars.
+[* , yellow]Charles Stross
+
+Starlet sex scandal.
+Giant squid involved.
+[◆ , red]Margaret Atwood
+
+Epitaph:
+Foolish humans,
+never escaped Earth.
+[● , green]Vernor Vinge</textarea>
+	<button id="go">Go!</button>
+
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="jquery-telescripter-0.2.js"></script>
+	<script>
+		var $source = $("#txt-source"),
+			$telescripter = $("#telescripter"),
+			telescripter = $telescripter.telescripter({
+			source: $source.val(),
+			charDelay: 100
+
+		}).data("telescripter");
+
+		$("#go").on("click", function(evt) {
+			telescripter.stop();
+			telescripter.options.source = $source.val();
+			telescripter.start();
+		});
+
+		$("#telescripter").on("newline", function(evt, lineNumber) {
+			$telescripter.addClass("newline");
+			setTimeout(function() {
+				$telescripter.removeClass("newline");
+			}, 100);
+		});
+	</script>
+</body>
+</html>
