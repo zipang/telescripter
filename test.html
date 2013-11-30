@@ -49,6 +49,12 @@
 			margin: 0 auto;
 			padding: 1em;
 		}
+		p {
+			display: block;
+			width: 40em;
+			margin: 0 auto;
+			color: #cde;
+		}
 	</style>
 </head>
 <body>
@@ -59,8 +65,6 @@
 
 	<div id="telescripter"></div>
 
-	<p>Type your 6 word stories and press go!</p>
-	<p>Each paragraph will display in its own page.</p>
 	<textarea name="" id="txt-source" cols="90" rows="10">
 For sale:
 Baby shoes,
@@ -80,7 +84,11 @@ Epitaph:
 Foolish humans,
 never escaped Earth.
 [● , green]Vernor Vinge</textarea>
+	<p>Type your 6 word stories and press go!<br>
+	Each paragraph will display in its own page.</p>
 	<button id="go">Go!</button>
+	<button id="stop">Stop!</button>
+	<button id="random">Random!</button>
 
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="jquery-telescripter-0.2.js"></script>
@@ -97,6 +105,12 @@ never escaped Earth.
 			telescripter.stop();
 			telescripter.options.source = $source.val();
 			telescripter.start();
+		});
+		$("#stop").on("click", function(evt) {
+			telescripter.stop();
+		});
+		$("#random").on("click", function(evt) {
+			telescripter.displayRandomPage();
 		});
 
 		$("#telescripter").on("newline", function(evt, lineNumber) {
