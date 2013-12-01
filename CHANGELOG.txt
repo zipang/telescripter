@@ -1,0 +1,21 @@
+#CHANGELOG
+
+##v0.2
+
+###v0.2.1	2013-11-28
+
+  * Added .displayRandomPage()
+  * Added Test & Demo Page
+
+###v0.2
+
+  * New custom events : 'newpage' and 'newline'
+  * Passed the rendered element to <DIV> to support separated HTML styles on prompt and line blocks. (span.prompt)
+  * Support for a micro langage allowing custom prompt definitions on each  lines.
+
+##v0.1 - 2013-11-17
+
+  * Text only : the telescripter pages are rendered into a single <PRE> tag.
+  * Loops through a text content through : pages / lines / chars with individual pageDelay, lineDelay, charDelay options
+  * requestAnimationFrame() usage allows the animation to stop when the browser window loose focus.
+  * the defaut jQuery plugin invocation on an element extracts the text from the element content and converts him into a telescripter.

@@ -20,9 +20,11 @@
 	// INTERNAL TOOLS
 
 	/**
-	 * Extract extended info from a line like prompt
+	 * Extract prompt definition from a line if there is one
 	 * Example:
 	 *   [$, red]I will begin with a red "$ " prompt
+	 * Full syntax:
+	 *   <[prompt, color, className]><line>
 	 * @param line
 	 * @return {Object} text and prompt of the line or false if no prompt info was detected
 	 */
