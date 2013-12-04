@@ -5,48 +5,106 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 
 	<style>
+		@font-face {
+			font-family: "cern";
+			src: url("fonts/cern-terminal.eot?#iefix") format("embedded-opentype"), url("fonts/cern-terminal.woff") format("woff"), url("fonts/cern-terminal.ttf") format("truetype"), url("fonts/cern-terminal.svg#icomoon") format("svg");
+		}
+		/* apply a natural box layout model to all elements */
+		* {
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
 		html {
-			font-family: Georgia, Serif;
 			font-size: 20px;
 		}
 		body {
+			font-family: cern, monospace;
 			position: relative;
 			background-color: #333;
-			background-image: url(http://learn.jquery.com/jquery-wp-content/themes/jquery/images/bg-body-learn.jpg)
-		}
-		h1, h2 {
+			margin: 0;
 			color: white;
+			background-image: url(img/dark-noise.png) repeat;
+			/*url(http://learn.jquery.com/jquery-wp-content/themes/jquery/images/bg-body-learn.jpg)*/
+		}
+		header {
+			margin: 1em auto;
+			padding-bottom: 1em;
+			width: 40%;
+			border-radius: 15px;
+
+			overflow: hidden;
+			background: url(img/dark-noise.png) repeat;
+			border: 15px solid black;
+		}
+
+		h1, h2 {
 			text-align: center;
+			font-family: cern;
+			text-transform: uppercase;
+			margin: 0.6em 0;
+			padding-bottom: 0.4em;
+			color: rgba(0, 255, 255, 0.5);
+		}
+		h1 div, h2 div {
+			background-color: rgba(255, 125, 0, 0.5);
+			min-height: 3em;
 		}
 		#telescripter {
+			font-family: cern, mono;
+			font-size: 22px;
+			font-weight: bold;
+			-webkit-stroke-width: 3px;
+			-webkit-stroke-color: #FFFFFF;
+			-webkit-fill-color: #FFFFFF;
+			text-shadow: 2px 0px 15px lightgreen;
+
 			display: block;
-			width: 50em;
 			margin: 1em auto;
 
 			box-shadow: 0 5 8 #333;
-			width: 40%;
-			min-height: 8em;
+			width: 565px;
+			height: 348px;
 			margin: auto;
-			padding: 0 1em;
-			border: 10px solid rgba(255,255,0,0.1);
-			border-radius: 20px;
-			background-color: rgba(0,64,0,0.5);
-			color: #999;
+			padding: 60px 170px 66px 66px;
+			color: rgba(50, 240, 200, 0.5);
+			//background: transparent url(img/dark-noise.png) repeat;
 		}
 		#telescripter.newline {
-			border-color: rgba(255,255,0,0.3);
+			text-shadow: 2px 0px 20px yellow;
+		}
+		#content {
+			width: 100%;
+			margin: 2em auto;
+			overflow: hidden;
+			position: relative;
+		}
+		#explanations {
+			float: left;
+			width: 25%;
+			padding: 2em;
+			margin-left: 5%;
+			font-size: 16px;
+			font-family: sans-serif;
 		}
 		#txt-source {
 			padding: 1em;
 			display: block;
-			width: 50em;
-			height: 20em;
-			margin: 5em auto 1em;
+			float: left;
+			width: 35%;
+			margin: 0 2.5%;
 			opacity: 0.6;
 		}
+		.controls {
+			width: 20%;
+			float: left;
+			margin-left: 5%;
+			text-align: center;
+		}
 		button {
-			display: block;
-			margin: 0 auto;
+			display: inline-block;
+			width: 80%;
+			margin: 0.5em 1em;
 			padding: 1em;
 		}
 		p {
@@ -59,47 +117,63 @@
 </head>
 <body>
 
-	<h1>TELESCRIPTER DEMO</h1>
-	<h2>6 Words Stories</h2>
-	<hr/>
+	<header>
+		<h2>6 Words Stories
+
+			As compiled by
+
+			WIRED</h2>
+		<h1>A TELESCRIPTER DEMO
+
+			A jQuery Plugin
+
+			by EIDOLON LABS</h1>
+	</header>
 
 	<div id="telescripter"></div>
 
-	<textarea name="" id="txt-source" cols="90" rows="10">
-For sale:
-Baby shoes,
-Never worn.
-[* , red]Ernest Hemingway
+	<div id="content">
+	<aside id="explanations">Type your 6 word stories and press go!<br>
+	Each paragraph will display in its own page.</aside>
+	<textarea name="" id="txt-source" rows="18">
+FOR SALE:
+BABY SHOES,
+NEVER WORN.
+[    * , bordeau]Ernest Hemingway
 
-Ships fire;
-Princess weeps,
-between stars.
-[* , yellow]Charles Stross
+SHIPS FIRE;
+PRINCESS WEEPS,
+BETWEEN STARS.
+[    * , white]Charles Stross
 
-Starlet sex scandal.
-Giant squid involved.
-[◆ , red]Margaret Atwood
+STARLET SEX SCANDAL.
+GIANT SQUID INVOLVED.
+[    ◆ , red]Margaret Atwood
 
-Epitaph:
-Foolish humans,
-never escaped Earth.
-[● , green]Vernor Vinge</textarea>
-	<p>Type your 6 word stories and press go!<br>
-	Each paragraph will display in its own page.</p>
-	<button id="go">Go!</button>
-	<button id="stop">Stop!</button>
-	<button id="random">Random!</button>
+EPITAPH:
+FOOLISH HUMANS,
+NEVER ESCAPED EARTH.
+[     ● , green]Vernor Vinge</textarea>
+
+	<div class="controls">
+		<button id="stop">Stop!</button>
+		<button id="go">Go!</button>
+		<button id="random">Random!</button>
+	</div>
+
+	</div>
 
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script src="jquery-telescripter-0.2.js"></script>
+	<script src="jquery-telescripter-0.2.1.js"></script>
 	<script>
 		var $source = $("#txt-source"),
 			$telescripter = $("#telescripter"),
 			telescripter = $telescripter.telescripter({
-			source: $source.val(),
-			charDelay: 100
+				source: $source.val(),
+				charDelay: 100,
+				lineDelay: 1000
 
-		}).data("telescripter");
+			}).data("telescripter");
 
 		$("#go").on("click", function(evt) {
 			telescripter.stop();
@@ -118,6 +192,10 @@ never escaped Earth.
 			setTimeout(function() {
 				$telescripter.removeClass("newline");
 			}, 100);
+		});
+
+		$("h1, h2").telescripter({
+			prompt: ""
 		});
 	</script>
 </body>
