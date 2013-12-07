@@ -30,8 +30,8 @@
 		header {
 			margin: 1em auto;
 			padding-bottom: 1em;
-			width: 40%;
-			border-radius: 15px;
+			width: 800px;
+			border-radius: 120px;
 
 			overflow: hidden;
 			background: url(img/dark-noise.png) repeat;
@@ -120,12 +120,14 @@
 	<header>
 		<h2>6 Words Stories
 
-			As compiled by
+			As compiled by WIRED
 
-			WIRED</h2>
-		<h1>A TELESCRIPTER DEMO
+			Ernest Hemingway, Vernor Vinge</h2>
+		<h1>6 Words Stories
 
-			A jQuery Plugin
+			A TELESCRIPTER PLUGIN
+
+			for jQuery
 
 			by EIDOLON LABS</h1>
 	</header>
@@ -133,38 +135,39 @@
 	<div id="telescripter"></div>
 
 	<div id="content">
-	<aside id="explanations">Type your 6 word stories and press go!<br>
-	Each paragraph will display in its own page.</aside>
+	<aside id="explanations">Type your 6 word stories here and press go!<br>
+	Each paragraph of text will display in its own page.<br>
+	The buttons here just invoke the public methods on the telescripter object.</aside>
 	<textarea name="" id="txt-source" rows="18">
 FOR SALE:
 BABY SHOES,
 NEVER WORN.
-[    * , bordeau]Ernest Hemingway
+[* , darkred]Ernest Hemingway
 
 SHIPS FIRE;
 PRINCESS WEEPS,
 BETWEEN STARS.
-[    * , white]Charles Stross
+[* , white]Charles Stross
 
 STARLET SEX SCANDAL.
 GIANT SQUID INVOLVED.
-[    ◆ , red]Margaret Atwood
+[◆ , red]Margaret Atwood
 
 EPITAPH:
 FOOLISH HUMANS,
 NEVER ESCAPED EARTH.
-[     ● , green]Vernor Vinge</textarea>
+[ ● , green]Vernor Vinge</textarea>
 
 	<div class="controls">
-		<button id="stop">Stop!</button>
-		<button id="go">Go!</button>
+		<button id="go">Refresh!</button>
+		<button id="stop">Pause!</button>
 		<button id="random">Random!</button>
 	</div>
 
 	</div>
 
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script src="jquery-telescripter-0.2.1.js"></script>
+	<script src="jquery-telescripter-0.2.2.js"></script>
 	<script>
 		var $source = $("#txt-source"),
 			$telescripter = $("#telescripter"),
@@ -181,7 +184,8 @@ NEVER ESCAPED EARTH.
 			telescripter.start();
 		});
 		$("#stop").on("click", function(evt) {
-			telescripter.stop();
+			telescripter.pauseResume();
+			$(this).text(telescripter.rendering ? "Pause!" : "Resume!");
 		});
 		$("#random").on("click", function(evt) {
 			telescripter.displayRandomPage();
