@@ -56,23 +56,24 @@ var telescripter = $("#telescripter-demo").data("telescripter");
 
 You can now control the telescripter by invoking its public methods :
 
-### stop()
-
-### start()
-
-### cls()
-
-Display a new page
-
-### displayRandomPage()
+* `start()`
+  Starts on a fresh page.
+* `stop()`
+  Stops the currently running animation.
+* `pauseResume()`
+  Toggle between the rendering flag, thus stoping or resuming the current animation.
+* `cls([prompt])`
+  Clear the screen (stopping if necessary the current animation.
+  Optionally displays a new prompt.
+* `displayPage(pageNumber[, callback])`
+  Stops the currently running animation and displays the specified page.
+* `displayRandomPage([callback])`
+  Stops the currently running animation and displays a new random page.
 
 ## Events
 
 When the animation is playing, the telescripter warns you of its different phases by sending custom events to its container object.
 
-### newPage
-
-The `newPage` event is sent every time a new page is drawn.
-
-### newLine
+* `newPage` sent every time a new page is drawn.
+* `newLine` sent every time a new line has been added to the display.
 
