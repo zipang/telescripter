@@ -2,6 +2,11 @@
 
 ##v0.2
 
+###v0.2.2	2013-12-07
+
+  * Added .displayPage(n)
+  * Added .pauseResume()
+
 ###v0.2.1	2013-11-28
 
   * Added .displayRandomPage()
