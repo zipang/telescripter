@@ -1,4 +1,9 @@
 #CHANGELOG
+##v0.3
+
+###v0.3.0 2013-12-09
+
+  * Added cursor option.
 
 ##v0.2
 
