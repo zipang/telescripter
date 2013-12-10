@@ -36,6 +36,7 @@ $(function() { // wait DOM Loaded
 
   $("#telescriptrer-demo").telescripter({
     prompt: " #>",    // that'll be the default line prompt
+    cursor: true,     // display a cursor
     charDelay: 100,   // display a new character each 1/10sec
     lineDelay: 1000,  // wait 1sec between each line
     pageDelay: 5000,  // wait 5secs between each page display
