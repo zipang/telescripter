@@ -204,7 +204,6 @@
 					i = 0, len = chars.push(" "),
 					delay = machine.options.charDelay,
 					printChars = function() {
-						var prog = machine.rendering;
 						requestAnimationFrame(machine.resume = function() {
 
 							if (machine.rendering === false) return;
