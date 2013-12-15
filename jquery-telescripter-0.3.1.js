@@ -133,11 +133,13 @@
 					lastPos, lastChar;
 
 				if (machine.options.cursor) { // wrap the last character inside a cursor
-					lastChar = text[lastPos = text.length - 1];
-					if (lastChar && lastChar !== ">") {
-						renderedText = text.substr(0, lastPos) + CURSOR_OPEN + lastChar + CURSOR_CLOSE;	
-					} else {
+					lastChar = text[lastPos = text.length - 1] || " ";
+
+					if (/^[ >]/.test(lastChar)) { // space or '>'
 						renderedText += (CURSOR_OPEN + "&nbsp;" + CURSOR_CLOSE);
+						
+					} else { // render the last char inside the cursor
+						renderedText = text.substr(0, lastPos) + CURSOR_OPEN + lastChar + CURSOR_CLOSE;							
 					}					
 				}
 
