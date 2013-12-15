@@ -13,9 +13,10 @@
 		autoloop: true,
 		cursor: true,
 		prompt: "> ",
-		pageDelay: 2500, // time between pages display
-		lineDelay: 500,  // time between paragraphs display
-		charDelay: 150   // time between individuals characters printing
+		pageDelay: 2500,  // time between pages display
+		lineDelay: 500,   // time between paragraphs display
+		charDelay: 150,   // time between individuals characters printing
+		charEvents: false // send events on each char ?
 	};
 
 	// CONST
