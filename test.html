@@ -54,12 +54,14 @@
 			font-family: ocra;
 			/*text-transform: uppercase;*/
 			margin: 0.6em 0;
-			padding-bottom: 0.4em;
+			padding: 0;
+			padding-top: 1.5em;
 			color: rgba(0, 255, 255, 0.5);
-		}
-		h1 div, h2 div {
 			background-color: rgba(255, 125, 0, 0.5);
 			min-height: 3em;
+		}
+		h2 {
+			min-height: 4em;
 		}
 		#telescripter {
 			font-family: cern, mono;
@@ -189,7 +191,7 @@ NEVER ESCAPED EARTH.
 	</div>
 
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script src="jquery-telescripter-0.3.0.js"></script>
+	<script src="jquery-telescripter-0.3.1.js"></script>
 	<script src="sounds/ion.sound.min.js"></script>
 	<script>
 		var $source = $("#txt-source"),
@@ -226,13 +228,13 @@ NEVER ESCAPED EARTH.
 			}, 100);
 		});
 
-		$("h1").telescripter({
-			prompt: "",
-			charEvents: true
-		}).on("newChar", function(evt) {
-			$.ionSound.play("button");
-		});
-		$("h2").telescripter({prompt: ""});
+		// $("h1").telescripter({
+		// 	prompt: "",
+		// 	charEvents: true
+		// }).on("newChar", function(evt) {
+		// 	$.ionSound.play("button");
+		// });
+		// $("h2").telescripter({prompt: ""});
 	</script>
 </body>
 </html>

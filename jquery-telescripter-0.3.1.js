@@ -1,7 +1,7 @@
 /**
  * TeleScripter - a jQuery Plugin
- * @version 0.3.0
- * @date 2013-12-09
+ * @version 0.3.1
+ * @date 2013-12-15
  * @author zipang
  * @url http://github.com/zipang/telescripter
  * @licence MIT
@@ -62,11 +62,11 @@
 	 * @constructor
 	 */
 	function TelescriptMachine(target, options) {
-		this.$display = $(target);
+		this.$renderElt = $(target);
 		this.options  = options;
 
 		if (!options.source) {
-			options.source = this.$display.text();
+			options.source = this.$renderElt.text();
 		}
 
 		if (options.autostart) {
@@ -86,14 +86,14 @@
 					len = machine.pages.length,
 					printPages = function() {
 
-						if (machine.rendering && i<len) {
+						if (machine.rendering === false) return;
+
+						if ( i < len ) {
 							machine.printPage(pages[i], i, printPages);
 							i++;
-						} else {
-							if (machine.rendering && machine.options.autoloop) {
-								i = 0;
-								requestAnimationFrame(printPages);
-							}
+						} else if (machine.options.autoloop) {
+							i = 0;
+							requestAnimationFrame(printPages);
 						}
 					};
 
@@ -113,32 +113,38 @@
 				return this;
 			},
 
-			cls : function(displayPrompt) {
-				this.$renderElt = $("<div>");
-				this.$display.empty().append(this.$renderElt);
-				this.text = "";
-				if (displayPrompt) this.refreshScreen(this.options.prompt);
-				return this;
+			cls : function() {
+				return this.prompt(this.text = "");
 			},
 			append : function(txt) {
 				return this.refreshScreen(this.text + txt);
 			},
-			newline : function(prompt) {
-				this.append("<br>" + (prompt || this.options.prompt));
-				return this;
+			prompt : function(prompt, lf) {
+				return this.append(
+					(lf ? "<br>" : "") 
+						+ (prompt ? 
+							"<span class=\"prompt\">" + prompt + "</span>"
+							: "")
+				);
 			},
 			refreshScreen : function(text) {
 				var machine = this,
 					renderedText = machine.text = text,
-					len = text.length;
+					lastPos, lastChar;
 
 				if (machine.options.cursor) { // wrap the last character inside a cursor
-					renderedText = text.substr(0, len-1) + CURSOR_OPEN + text[len-1] + CURSOR_CLOSE;
+					lastChar = text[lastPos = text.length - 1];
+					if (lastChar && lastChar !== ">") {
+						renderedText = text.substr(0, lastPos) + CURSOR_OPEN + lastChar + CURSOR_CLOSE;	
+					} else {
+						renderedText += (CURSOR_OPEN + "&nbsp;" + CURSOR_CLOSE);
+					}					
 				}
 
 				machine.$renderElt.html(renderedText);
 				return machine;
 			},
+			
 			displayRandomPage : function(callback) {
 
 				var rnd = Math.floor(Math.random()*this.pages.length);
@@ -174,7 +180,7 @@
 										prompt = lineInfo.prompt;
 									}
 
-									machine.newline(prompt);
+									machine.prompt(prompt, i > 0);
 									machine.rendering = setTimeout(function() {
 										machine.printLine(newLine, i, printLines);
 										i++
@@ -202,18 +208,24 @@
 
 				var chars = line.split(""),
 					machine = this,
-					i = 0, len = chars.push(" "),
+					char, i = 0, len = chars.push(" "),
+					$renderElt = machine.$renderElt,
 					delay = machine.options.charDelay,
+					nextChar = machine.options.charEvents 
+						? function() { 
+							$renderElt.trigger("newChar", char = chars[i++]);
+							return char; 
+						} : function() { return chars[i++]; },
 					printChars = function() {
 						requestAnimationFrame(machine.resume = function() {
 
 							if (machine.rendering === false) return;
 
 							if (i < len) {
-								machine.refreshScreen(machine.text + chars[i++]);
+								machine.refreshScreen(machine.text + nextChar());
 								machine.rendering = setTimeout(printChars, delay);
 							} else {
-								machine.$renderElt.trigger("newline", [lineNumber+1]); // trigger the custom 'newline' event with the line number (1-based)
+								$renderElt.trigger("newline", [lineNumber+1]); // trigger the custom 'newline' event with the line number (1-based)
 								eol(); // end-of-line callback
 							}
 						});
