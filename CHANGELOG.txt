@@ -1,6 +1,11 @@
 #CHANGELOG
 ##v0.3
 
+###v0.3.1 2013-12-15
+
+  * Added char events (optional)
+  * Fixed: cursor dissapearing on space 
+
 ###v0.3.0 2013-12-09
 
   * Added cursor option.
