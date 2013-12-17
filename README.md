@@ -41,7 +41,8 @@ $(function() { // wait DOM Loaded
     lineDelay: 1000,  // wait 1sec between each line
     pageDelay: 5000,  // wait 5secs between each page display
     autostart: true,  // Automatically start the telescripter animation
-    autoloop: true    // Automatically loop on the provided content
+    autoloop: true,   // Automatically loop on the provided content
+    charEvents: true  // Get an additional 'newChar' event 
   });
 })
 
@@ -77,4 +78,5 @@ When the animation is playing, the telescripter warns you of its different phase
 
 * `newPage` sent every time a new page is drawn.
 * `newLine` sent every time a new line has been added to the display.
+* `newChar` sent (optionaly) every time a new char is appended to the display.
 
